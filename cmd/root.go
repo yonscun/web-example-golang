@@ -16,9 +16,9 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"github.com/habibiefaried/web-example-golang/controller"
 	"github.com/spf13/cobra"
+	"log"
 	"net/http"
 	"os"
 )
@@ -31,7 +31,7 @@ var rootCmd = &cobra.Command{
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		os.Exit(1)
 	} else {
 		controller.Basic()
@@ -42,15 +42,9 @@ func Execute() {
 			if errDir != nil {
 				log.Println(err)
 			}
-		} else {
-			log.Println("Upload directory exist")
-			files, err := ioutil.ReadDir("./assets/uploads")
-			if err != nil {
-				log.Println(err)
-			}
 		}
 
-		fmt.Println("server started at localhost:" + portBind)
+		log.Println("server started at localhost:" + portBind)
 		http.ListenAndServe(":"+portBind, nil)
 	}
 }
