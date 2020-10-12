@@ -34,9 +34,22 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(1)
 	} else {
-		fmt.Printf("Port %v\n", portBind)
 		controller.Basic()
 		http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets")))) // For assets
+		if _, err := os.Stat("./assets/uploads"); os.IsNotExist(err) {
+			log.Println("Creating upload directory")
+			errDir := os.MkdirAll("./assets/uploads", 0755)
+			if errDir != nil {
+				log.Println(err)
+			}
+		} else {
+			log.Println("Upload directory exist")
+			files, err := ioutil.ReadDir("./assets/uploads")
+			if err != nil {
+				log.Println(err)
+			}
+		}
+
 		fmt.Println("server started at localhost:" + portBind)
 		http.ListenAndServe(":"+portBind, nil)
 	}

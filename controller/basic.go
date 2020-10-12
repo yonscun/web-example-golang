@@ -23,7 +23,7 @@ func Basic() {
 
 	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		data := make(map[string]interface{})
-		data["name"] = "Batman"
+		data["name"] = "Superman"
 
 		err = tmpl.ExecuteTemplate(w, "about", data)
 		if err != nil {
